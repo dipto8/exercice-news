@@ -1,23 +1,35 @@
-import pp from '../../../assets/user.png'
+import { useContext } from "react";
+import pp from "../../../assets/user.png";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 export default function Navbar() {
+  const { user, logOut } = useContext(AuthContext);
+  
+
+  const handleSiginOut = () => {
+    logOut().then().catch();
+  };
+
   const navLinks = (
     <>
       <li>
-        <NavLink to='/'>Home</NavLink>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to='/about'>About</NavLink>
+        <NavLink to="/about">About</NavLink>
       </li>
       <li>
-        <NavLink to='/caarer'>Caarer</NavLink>
+        <NavLink to="/caarer">Caarer</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login">Login</NavLink>
       </li>
     </>
   );
 
   return (
-    <div>
+
       <div className="navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
@@ -46,23 +58,27 @@ export default function Navbar() {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-             {navLinks}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <Link to='/login'><button className="btn  btn-primary btn-sm">Login</button></Link>
+          {user ? (
+            <button onClick={handleSiginOut} className="btn btn-outline btn-error btn-sm lowercase">{`${user.email} (Sign out)`}</button>
+          ) : (
+            <Link to="/login">
+              <button className="btn btn-outline   btn-success btn-sm px-4">Login</button>
+            </Link>
+          )}
           <div
-          tabIndex={0}
-          role="button"
-          className="btn btn-ghost btn-circle avatar"
-        >
-          <div className="w-10 rounded-full bg-purple-600">
-            <img alt="Tailwind CSS Navbar component" src={pp} />
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <div className="w-10 rounded-full bg-purple-600">
+              <img alt="Tailwind CSS Navbar component" src={pp} />
+            </div>
           </div>
         </div>
-        </div>
       </div>
-    </div>
+ 
   );
 }

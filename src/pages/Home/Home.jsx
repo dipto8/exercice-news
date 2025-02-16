@@ -5,10 +5,11 @@ import Navbar from "./Navbar/Navbar";
 import LeftNav from "../Shared/LeftNav/LeftNav";
 import { Link, useLoaderData } from "react-router-dom";
 import NewsCard from "./NewsCard/NewsCard";
+import RightNav from "../Shared/RightNav/RightNav";
 
-export default function Home() {
+export default function Home({Fnews}) {
   const news = useLoaderData();
-  console.log(news);
+  
 
   return (
     <div>
@@ -21,19 +22,14 @@ export default function Home() {
           <LeftNav></LeftNav>
         </div>
         <div className="main col-span-2 ">
-          {
-            news.map((Anews) =><NewsCard
-            key={Anews._id}
-            news={Anews}
-            >
-
-
-            </NewsCard>)
-          }
-
+          {news.map((Anews) => (
+            <NewsCard key={Anews._id} news={Anews}></NewsCard>
+          ))}
         </div>
 
-        <div className="RightNav grid-cols-1">RightNav</div>
+        <div className="RightNav grid-cols-1">
+          <RightNav></RightNav>
+        </div>
       </div>
     </div>
   );
